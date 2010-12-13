@@ -1,0 +1,13 @@
+;; This config was generated using ensime-config-gen. Feel free to customize its contents manually. 
+
+(
+
+:project-name "Starting Point"
+
+:server-root "/home/dpp/bin/ensime"
+
+:project-package ""
+
+:use-sbt t
+
+)
