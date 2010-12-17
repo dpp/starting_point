@@ -76,3 +76,12 @@ class Boot {
     S.addAround(DB.buildLoanWrapper)
   }
 }
+
+object ReqMaker {
+  def reqFor(path: List[String]): Req = 
+    new Req(ParsePath(path, "", true, false),
+            "", GetRequest,
+            Empty, null, System.nanoTime, System.nanoTime,
+            false,  () => ParamCalcInfo(Nil, Map.empty, Nil, Empty),
+            Map())
+}
