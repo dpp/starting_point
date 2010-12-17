@@ -49,3 +49,5 @@ project/boot
 # Pax Runner (for easy OSGi launching)
 runner
 
+# database
+lift_proto*
