@@ -39,9 +39,16 @@ class Boot {
     // where to search snippet
     LiftRules.addToPackages("code")
 
+
+//    List().map(_.toMenu)
+
     // Build SiteMap
     def sitemap = SiteMap(
       Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
+      
+      // Menu.i("dev") / "dev" / "dog" ,
+      Menu(new DevLoc),
+//       Menu.param[PageData]("dev", "dev", x => Full(new PageData(x)), _ => "dev") / "dev" / ** ,
 
       // more complex because this menu allows anything in the
       // /static path to be visible
@@ -75,4 +82,49 @@ class Boot {
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
   }
+}
+
+class DevLoc extends Loc[PageData] {
+  // the name of the page
+  def name = "Dev"
+        
+  // the default parameters (used for generating the menu listing)
+  def defaultValue = Empty
+
+  // no extra parameters
+  def params = Nil
+
+  /**
+   * What's the text of the link?
+   */
+  def text = "dev"
+
+  override def overrideValue = Full(PageData("foo"))
+
+  lazy val link = new Loc.Link[PageData](List("dev"), true)
+
+  /*
+        val link = new Loc.Link[T](ParamMenuable.this.path, 
+                                   ParamMenuable.this.headMatch) {
+          override def createLink(in: T) = 
+            Full(Text(ParamMenuable.this.path.mkString("/", "/", "/")+
+                      urlEncode(ParamMenuable.this.encoder(in))))
+        }
+
+        /**
+         * Rewrite the request and emit the type-safe parameter
+         */
+        override val rewrite: LocRewrite =
+          Full(NamedPF("Wiki Rewrite") {
+            case RewriteRequest(ParsePath(x, _, _,_), _, _) 
+            if x.dropRight(1) == ParamMenuable.this.path && 
+            x.takeRight(1).headOption.flatMap(a => 
+              ParamMenuable.this.parser(a)).isDefined
+            =>
+              (RewriteResponse(x.dropRight(1)), 
+               x.takeRight(1).headOption.flatMap(a => 
+                 ParamMenuable.this.parser(a)).get) 
+              
+          })
+  */
 }

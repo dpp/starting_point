@@ -34,5 +34,11 @@ class User extends MegaProtoUser[User] {
   }
 }
 
+
+case class PageData(str: String) {
+  println("Created a pagedata with "+str)
+}
+
+
 }
 }

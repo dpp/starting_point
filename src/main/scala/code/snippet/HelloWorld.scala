@@ -1,5 +1,5 @@
-package code {
-package snippet {
+package code
+package snippet
 
 import _root_.scala.xml.{NodeSeq, Text}
 import _root_.net.liftweb.util._
@@ -7,6 +7,8 @@ import _root_.net.liftweb.common._
 import _root_.java.util.Date
 import code.lib._
 import Helpers._
+
+import model._
 
 class HelloWorld {
   lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date
@@ -21,5 +23,6 @@ class HelloWorld {
    */
 }
 
-}
+class Snark(pd: PageData) {
+  def render = "*" #> pd.toString
 }
