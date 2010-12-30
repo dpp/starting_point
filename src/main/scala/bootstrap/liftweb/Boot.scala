@@ -34,19 +34,19 @@ class Boot {
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
-    Schemifier.schemify(true, Schemifier.infoF _, User)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Frog)
 
     // where to search snippet
     LiftRules.addToPackages("code")
 
     // Build SiteMap
-    def sitemap = SiteMap(
+    def sitemap = SiteMap(List(
       Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
 
       // more complex because this menu allows anything in the
       // /static path to be visible
       Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	       "Static Content")))
+	       "Static Content"))) ::: Frog.menus :_*)
 
     def sitemapMutators = User.sitemapMutator
 
