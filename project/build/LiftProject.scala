@@ -10,6 +10,8 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
   // this line
   override def scanDirectories = Nil
 
+  override val jettyPort = 8081
+
   override def libraryDependencies = Set(
     "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default",
     "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default",
