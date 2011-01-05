@@ -11,8 +11,7 @@ import JE._
 
 import js.jquery.JqJsCmds.{AppendHtml, FadeOut, Hide, FadeIn}
 import java.util.Date
-import scala.xml._
-import util.Helpers._
+import scala.xml.{Text, NodeSeq}
 
 object ChatServer extends LiftActor with ListenerManager {
   private var messages = Vector(Message("Welcome"))
@@ -53,7 +52,7 @@ class Chat extends CometActor with CometListener {
     case (m: Message, v: Vector[Message]) => {
       msgs = v
       partialUpdate(
-        AppendHtml("ul_dude", doLine(m)) &
+        AppendHtml("ul_dude", doLine(m)(("li ^^" #> "^^")(defaultXml))) &
         Hide(m.guid) & FadeIn(m.guid, TimeSpan(0),TimeSpan(500)))
     }
 
@@ -62,12 +61,14 @@ class Chat extends CometActor with CometListener {
 
   def render = "ul [id]" #> "ul_dude" & "li" #> msgs.map(doLine)
 
-  private def doLine(m: Message) = {
-    <li id={m.guid}>{m.msg} 
-    {SHtml.ajaxButton("delete", () => {
-      ChatServer ! Remove(m.guid)
-      Noop
-    })}</li>
+  private def doLine(m: Message)(node: NodeSeq) = {
+    ("li [id]" #> m.guid & // set GUID
+     // set body
+     "li *" #> (Text(m.msg+" ") ++
+                SHtml.ajaxButton("delete", () => {
+                  ChatServer ! Remove(m.guid)
+                  Noop
+                })))(node)
   }
 
   override def fixedRender = {
