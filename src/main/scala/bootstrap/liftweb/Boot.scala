@@ -11,6 +11,7 @@ import Loc._
 import mapper._
 
 import code.model._
+import code.lib._
 
 
 /**
@@ -74,5 +75,8 @@ class Boot {
 
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
+
+    // initialize the localizer
+    UrlLocalizer.init() 
   }
 }
