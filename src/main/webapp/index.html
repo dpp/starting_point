@@ -6,12 +6,43 @@
   </head>
   <body class="lift:content_id=main">
     <div id="main" class="lift:surround?with=default;at=content">
-      <h2>Welcome to your project!</h2>
-      <p>
-	<span class="lift:helloWorld.howdy">
-	  Welcome to your Lift app at <span id="time">Time goes here</span>
-	</span>
-      </p>
+      <div class="lift:ShowMemoize">
+        <button name="refresh_all">Refresh All</button>
+
+        <div name="one">
+          <span>The current time is: </span>
+          <button>Click Me</button>
+        </div>
+
+        <div name="two">        
+          <button>Update this</button>
+          <ul>
+            <li>Count: </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="lift:ShowMemoize">
+	This is a second, independent invocation
+	of the snippet, with different markup.  And
+	the snippet works the same: 
+        <button name="refresh_all">Click me to refresh all this</button>
+
+        <div name="one">
+          <span>My cat wants catfood at </span>
+          <button>Say Meow</button>
+        </div>
+
+        <div name="two">        
+          <button>Click me to change things a lot</button>
+          <ul>
+            <li>Sequence number: </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>
