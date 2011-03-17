@@ -1,9 +1,9 @@
-package code {
-package model {
+package code
+package model
 
-import _root_.net.liftweb.mapper._
-import _root_.net.liftweb.util._
-import _root_.net.liftweb.common._
+import net.liftweb.mapper._
+import net.liftweb.util._
+import net.liftweb.common._
 
 /**
  * The singleton that has methods for accessing the database
@@ -18,12 +18,22 @@ object User extends User with MetaMegaProtoUser[User] {
 
   // comment this line out to require email validations
   override def skipEmailValidation = true
+
+  override def logUserOut() {
+    ExtendedSession.userDidLogout(User.currentUser)
+    super.logUserOut()
+  }
+
+  override def logUserIn(who: User) {
+    ExtendedSession.userDidLogin(who)
+    super.logUserIn(who)
+  }
 }
 
 /**
  * An O-R mapped "User" class that includes first name, last name, password and we add a "Personal Essay" to it
  */
-class User extends MegaProtoUser[User] {
+class User extends MegaProtoUser[User] with UserIdAsString {
   def getSingleton = User // what's the "meta" server
 
   // define an additional field for a personal essay
@@ -32,7 +42,4 @@ class User extends MegaProtoUser[User] {
     override def textareaCols = 50
     override def displayName = "Personal Essay"
   }
-}
-
-}
 }
