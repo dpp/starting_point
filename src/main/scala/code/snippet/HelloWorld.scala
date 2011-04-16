@@ -1,11 +1,10 @@
-package code {
-package snippet {
+package code
+package snippet
 
-import _root_.scala.xml.{NodeSeq, Text}
-import _root_.net.liftweb.util._
-import _root_.net.liftweb.common._
-import _root_.java.util.Date
-import code.lib._
+import net.liftweb.common.Box
+import lib.DependencyFactory
+import java.util.Date
+import net.liftweb.util.Helpers
 import Helpers._
 
 class HelloWorld {
@@ -13,13 +12,4 @@ class HelloWorld {
 
   // replace the contents of the element with id "time" with the date
   def howdy = "#time *" #> date.map(_.toString)
-
-  /*
-   lazy val date: Date = DependencyFactory.time.vend // create the date via factory
-
-   def howdy = "#time *" #> date.toString
-   */
-}
-
-}
 }

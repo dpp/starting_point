@@ -6,6 +6,7 @@ import Helpers._
 
 import common._
 import http._
+import js.jquery.JQuery14Artifacts
 import sitemap._
 import Loc._
 import mapper._
@@ -54,6 +55,8 @@ class Boot {
     // each page, just comment this line out.
     LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
 
+    LiftRules.jsArtifacts = JQuery14Artifacts
+
     //Show the spinny image when an Ajax call starts
     LiftRules.ajaxStart =
       Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
@@ -72,7 +75,46 @@ class Boot {
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))    
 
+    LiftRules.dispatch.append(FileUpload)
+
+    LiftRules.progressListener = {
+      val opl = LiftRules.progressListener
+      val ret: (Long, Long, Int) => Unit = 
+        (a, b, c) => {
+          // println("progress listener "+a+" plus "+b+" "+c)
+          // Thread.sleep(100) -- demonstrate slow uploads
+          opl(a,b,c)
+        }
+      ret
+    }
+
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
+  }
+}
+
+
+import rest._
+import json._
+import JsonDSL._
+object FileUpload extends RestHelper {
+  serve {
+    case "upload" :: "thing" :: Nil Post req => {
+      println("uploaded "+req.uploadedFiles)
+      val ojv: Box[JValue] = 
+        req.uploadedFiles.map(fph => ("name" -> fph.fileName) ~ 
+                              ("type" -> fph.mimeType) ~
+                              ("size" -> fph.length)).headOption
+
+      val ajv = ("name" -> "n/a") ~ ("type" -> "n/a") ~ ("size" -> 0L) ~ ("yak" -> "brrrr")
+
+      val ret = ojv openOr ajv
+
+      // This is a tad bit of a hack, but we need to return text/plain, not JSON
+      val jr = JsonResponse(ret).toResponse.asInstanceOf[InMemoryResponse]
+      InMemoryResponse(jr.data, ("Content-Length", jr.data.length.toString) :: 
+                       ("Content-Type", "text/plain") :: S.getHeaders(Nil),
+                       S.responseCookies, 200)
+    }
   }
 }

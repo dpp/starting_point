@@ -1,18 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
     <title>Home</title>
-  </head>
-  <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default;at=content">
-      <h2>Welcome to your project!</h2>
-      <p>
+</head>
+<body class="lift:content_id=main">
+<div id="main" class="lift:surround?with=default;at=content">
+    <h2>Welcome to your project!</h2>
+
+    <p>
 	<span class="lift:helloWorld.howdy">
 	  Welcome to your Lift app at <span id="time">Time goes here</span>
 	</span>
-      </p>
-    </div>
-  </body>
+
+    <form id="file_upload" action="/upload/thing" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" multiple class="lift:FuncMe">
+    <button>Upload</button>
+    <div class="js">Upload files</div>
+</form>
+
+Meow
+
+         <table id="files"></table>
+    </p>
+
+    <tail>
+
+<script>
+// <![CDATA[
+$(function () {
+    $('#file_upload').fileUploadUI({
+        uploadTable: $('#files'),
+        buildUploadRow: function (files, index) {
+            return $('<tr><td>' + files[index].name + '<\/td>' +
+                    '<td class="file_upload_progress"><div><\/div><\/td>' +
+                    '<td class="file_upload_cancel">' +
+                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                    '<\/button><\/td><\/tr>');
+        },
+        buildDownloadRow: function (file) {
+            return $('<tr><td>' + file.name + '<\/td><\/tr>');
+        }
+    });
+});
+    // ]]>
+</script>
+    </tail>
+</div>
+
+
+</body>
 </html>
 
