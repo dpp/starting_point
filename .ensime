@@ -4,7 +4,7 @@
 
 :project-name "Starting Point"
 
-:server-root "/home/dpp/bin/ensime"
+:server-root "/Users/dpp/bin/ensime"
 
 :project-package ""
 
