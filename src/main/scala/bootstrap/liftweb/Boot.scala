@@ -11,6 +11,8 @@ import Loc._
 import mapper._
 
 import code.model._
+import code.comet._
+import code.snippet._
 
 
 /**
@@ -43,6 +45,8 @@ class Boot {
     def sitemap = SiteMap(
       Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
 
+      ViewMenu.menu,
+
       // more complex because this menu allows anything in the
       // /static path to be visible
       Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
@@ -74,5 +78,7 @@ class Boot {
 
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
+
+    LiftRules.dispatch.append(ChatRest)
   }
 }
