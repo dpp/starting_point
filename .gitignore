@@ -17,6 +17,7 @@ derby.log
 .project
 .manager
 .externalToolBuilders
+.scala_dependencies
 
 # building
 target
