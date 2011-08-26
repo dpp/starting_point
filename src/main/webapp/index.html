@@ -12,6 +12,21 @@
 	  Welcome to your Lift app at <span id="time">Time goes here</span>
 	</span>
       </p>
+
+      <div>Upper</div>
+
+      <lift:bind-at name="side-col">
+        <div class="lift:BlogPostTest?eager_eval=true">
+
+	  Foo
+	  <lift:surround with="_userfaces" at="title">
+	    <span id="memberfaces">Members</span>
+	  </lift:surround>
+	</div>
+      </lift:bind-at>
+
+      <div>lower</div>
+
     </div>
   </body>
 </html>

@@ -21,5 +21,13 @@ class HelloWorld {
    */
 }
 
+class BlogPostTest {
+  def  render(in: NodeSeq): NodeSeq = {
+    println("Mr. Dude... binding to "+in)
+
+    ("#memberfaces *"#> <h1>Bind Test</h1>)(in)
+  }
+}
+
 }
 }
