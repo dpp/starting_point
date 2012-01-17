@@ -68,10 +68,12 @@ class Boot {
     // What is the function to test if a user is logged in?
     LiftRules.loggedInTest = Full(() => User.loggedIn_?)
 
+    /*
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))    
-
+  */
+    
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
   }
