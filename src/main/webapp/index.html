@@ -6,11 +6,28 @@
   </head>
   <body class="lift:content_id=main">
     <div id="main" class="lift:surround?with=default;at=content">
+        <style>
+            /* <![CDATA[ */
+            .has_mondo {
+                color: green;
+            }
+            /* ]]> */
+        </style>
+
       <h2>Welcome to your project!</h2>
       <p>
 	<span class="lift:helloWorld.howdy">
 	  Welcome to your Lift app at <span id="time">Time goes here</span>
 	</span>
+
+        <ul data-lift="ParentMorph">
+      <li>Hi I am not mondo and should be black</li>
+        </ul>
+
+        <ul data-lift="ParentMorph">
+      <li class="mondo">Hi I am mondo and should be green</li>
+        </ul>
+
       </p>
     </div>
   </body>
