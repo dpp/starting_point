@@ -9,6 +9,7 @@ import http._
 import sitemap._
 import Loc._
 import mapper._
+import code.lib._
 
 import code.model._
 
@@ -42,6 +43,8 @@ class Boot {
     // Build SiteMap
     def sitemap = SiteMap(
       Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
+
+    AlbumMenu.album,
 
       // more complex because this menu allows anything in the
       // /static path to be visible
