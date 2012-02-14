@@ -11,7 +11,7 @@ import Loc._
 import mapper._
 
 import code.model._
-
+import code.lib._
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -71,6 +71,14 @@ class Boot {
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))    
+
+    LiftSession.onShutdownSession = MySessionInfo.destroyed _ :: LiftSession.onShutdownSession
+
+    LiftSession.afterSessionCreate = MySessionInfo.created _ :: LiftSession.afterSessionCreate
+
+    LiftSession.onBeginServicing = MySessionInfo.doBeginService _ :: LiftSession.onBeginServicing
+
+    User.onLogIn = MySessionInfo.login _ :: User.onLogIn
 
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
