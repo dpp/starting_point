@@ -11,7 +11,7 @@ import Loc._
 import mapper._
 
 import code.model._
-
+import code.snippet._
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -38,6 +38,11 @@ class Boot {
 
     // where to search snippet
     LiftRules.addToPackages("code")
+
+    LiftRules.snippetDispatch.prepend{
+      case "menu" => MyMenu
+      case "Menu" => MyMenu
+    }
 
     // Build SiteMap
     def sitemap = SiteMap(
